@@ -224,6 +224,9 @@ export function connectGateway(host: GatewayHost) {
       void loadHealthState(host as unknown as OpenClawApp);
       void loadNodes(host as unknown as OpenClawApp, { quiet: true });
       void loadDevices(host as unknown as OpenClawApp, { quiet: true });
+      // Reload chat history after reconnect so webchat sessions
+      // resume where they left off (e.g. after SIGUSR1 restart).
+      void loadChatHistory(host as unknown as OpenClawApp);
       void refreshActiveTab(host as unknown as Parameters<typeof refreshActiveTab>[0]);
     },
     onClose: ({ code, reason, error }) => {

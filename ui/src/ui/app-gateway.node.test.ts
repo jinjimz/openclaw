@@ -485,6 +485,14 @@ describe("connectGateway", () => {
     expect(host.lastErrorCode).toBeNull();
   });
 
+  it("reloads chat history on hello so webchat sessions resume after reconnect", () => {
+    const { client } = connectHostGateway();
+    expect(loadChatHistoryMock).not.toHaveBeenCalled();
+
+    client.emitHello();
+    expect(loadChatHistoryMock).toHaveBeenCalledTimes(1);
+  });
+
   it("does not reload chat history for each live tool result event", () => {
     const { client } = connectHostGateway();
     emitToolResultEvent(client);
